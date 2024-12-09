@@ -98,22 +98,6 @@ function sortAndFilter(arr) {
       }
     });
 }
-//gets called whenever the user changes a priority of an item
-function updateOrder(priority, id) {
-  let biggestNum = 0;
-  //parses int since the value of a number-input is sometimes randomly given as a string
-  const priorityNum = parseInt(priority);
-  mediaArr.forEach((e) => {
-    //finds the highest priority
-    if (e.priority > biggestNum) biggestNum = e.priority;
-    //swaps the priorities of the element that has the same priority as the user set the current element to
-    if (priorityNum === e.priority) e.priority = mediaArr[id].priority;
-  });
-  //updates the current elements priority as long as it is inbounds of the list
-  if (priorityNum > 0 && priorityNum <= biggestNum)
-    mediaArr[id].priority = priorityNum;
-  saveAndRender();
-}
 
 //generates the list
 function generateList(arr) {
@@ -136,8 +120,8 @@ function generateList(arr) {
     if (media.finished) mediaContainer.classList.add("finished");
     //eventlistener for the checkbox for when the media is finished
     mediaFinished.addEventListener("change", () => {
-      media.finished = mediaFinished.checked; // Update the finished status
-      saveAndRender(); // Re-render the list after updating
+      media.finished = mediaFinished.checked;
+      saveAndRender();
     });
 
     const mediaPriority = document.createElement("p");
@@ -183,6 +167,7 @@ function generateList(arr) {
       }
     });
     ("");
+
     // setting time in a pretty format, reason for isos format earlier. Not using isos gave wrong output
     const mediaTimestamp = document.createElement("p");
     mediaTimestamp.textContent = new Date(media.timeStamp).toLocaleString(
@@ -195,6 +180,7 @@ function generateList(arr) {
       }
     );
     mediaTimestamp.classList.add("timestamp");
+
     //appends
     rightContainer.append(mediaTimestamp, mediaDelete, editButton);
     leftContainer.append(mediaPriority, mediaFinished);

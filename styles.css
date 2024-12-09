@@ -64,7 +64,7 @@ header {
   justify-content: space-between;
 }
 
-.media-container .finished {
+.media-container input {
   appearance: none;
   width: 1.2em;
   height: 1.2em;
@@ -160,4 +160,23 @@ header > div > div {
   appearance: none;
   border: none;
   background: none;
+}
+
+dialog {
+  gap: 10px;
+  border: none;
+  border-radius: 20px;
+  padding: 10px;
+  position: relative;
+  margin-left: 40%;
+  margin-top: 5%;
+}
+
+dialog button {
+  border: none;
+  background-color: darkcyan;
+  color: lavenderblush;
+  border-radius: 5px;
+  padding: 0.5em;
+  border-radius: 20px;
 }
