@@ -22,7 +22,7 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
   const formdata = new FormData(form);
   const userInput = formdata.get("task-input");
-  //returns to prevent empty list items
+  //returns / gives error to prevent empty list items
   if (!userInput) {
     showError("you can't submit an empty task");
     return;
@@ -84,17 +84,17 @@ function saveAndRender() {
 
 function sortAndFilter(arr) {
   return arr
-    .filter((e) => (showFinished.checked ? e : !e.finished))
+    .filter((e) => (showFinished.checked ? e.finished : !e.finished))
     .sort((a, b) => {
       switch (sort.value) {
-        case "asc": // Sort by priority ascending
+        case "asc": // Sort by name ascending
           return a.name.localeCompare(b.name);
-        case "desc": // Sort by priority descending
+        case "desc": // Sort by name descending
           return b.name.localeCompare(a.name);
-        case "oldest": // Sort by timestamp descending
-          return new Date(b.timeStamp) - new Date(a.timeStamp);
-        case "newest": // Sort by timestamp ascending
+        case "oldest": // Sort by timestamp ascending
           return new Date(a.timeStamp) - new Date(b.timeStamp);
+        case "newest": // Sort by timestamp descending
+          return new Date(b.timeStamp) - new Date(a.timeStamp);
       }
     });
 }
@@ -135,6 +135,10 @@ function generateList(arr) {
     mediaFinished.classList.add("pointer");
     if (media.finished) mediaContainer.classList.add("finished");
     //eventlistener for the checkbox for when the media is finished
+    mediaFinished.addEventListener("change", () => {
+      media.finished = mediaFinished.checked; // Update the finished status
+      saveAndRender(); // Re-render the list after updating
+    });
 
     const mediaPriority = document.createElement("p");
 
@@ -166,7 +170,7 @@ function generateList(arr) {
     const rightContainer = document.createElement("div");
     rightContainer.classList.add("container");
 
-    //Delete button
+    //delete button
     const mediaDelete = document.createElement("button");
     mediaDelete.textContent = "Delete";
     mediaDelete.classList.add("pointer");
