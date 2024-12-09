@@ -114,6 +114,8 @@ header {
   color: lavenderblush;
   border-radius: 5px;
   padding: 0.5em;
+  height: 40px;
+  width: 30%;
 }
 .container > button:hover {
   opacity: 50%;
