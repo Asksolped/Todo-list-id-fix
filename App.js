@@ -84,7 +84,7 @@ function saveAndRender() {
 
 function sortAndFilter(arr) {
   return arr
-    .filter((e) => (showFinished.checked ? e.finished : !e.finished))
+    .filter((e) => (showFinished.checked ? true : !e.finished))
     .sort((a, b) => {
       switch (sort.value) {
         case "asc": // Sort by name ascending
