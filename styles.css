@@ -1,0 +1,163 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: seashell;
+  font-family: "Outfit", sans-serif;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background-color: #407076;
+  color: whitesmoke;
+  width: 55%;
+  border-radius: 10px;
+  margin: 1rem;
+  padding: 1rem;
+}
+#show-finished {
+  appearance: none;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 3px;
+  border: 2px solid rgb(227, 227, 227);
+  background-color: whitesmoke;
+  cursor: pointer;
+  margin-top: 2px;
+}
+
+#show-finished:checked {
+  background-color: #407076;
+  border-color: darkcyan;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  gap: 5px;
+  width: 100%;
+}
+
+.media-container {
+  display: flex;
+  gap: 10px;
+  border: 2px rgb(225, 234, 243) solid;
+  border-radius: 10px;
+  padding: 5px;
+  background-color: whitesmoke;
+  width: 50%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.media-container .finished {
+  appearance: none;
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 3px;
+  border: 2px solid rgb(227, 227, 227);
+  background-color: whitesmoke;
+  cursor: pointer;
+}
+
+.media-container input:checked {
+  background-color: #407076;
+  border-color: darkcyan;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.container > div {
+  display: flex;
+  flex-direction: column;
+  width: 2em;
+  gap: 5px;
+}
+.container > div > button {
+  border: none;
+  background-color: darkcyan;
+  border-radius: 5px;
+}
+
+.container > div > button:hover {
+  opacity: 50%;
+}
+
+.container > button {
+  border: none;
+  background-color: darkcyan;
+  color: lavenderblush;
+  border-radius: 5px;
+  padding: 0.5em;
+}
+.container > button:hover {
+  opacity: 50%;
+}
+.finished {
+  background-color: #aed4e6;
+}
+
+header > div {
+  display: flex;
+  gap: 50px;
+}
+
+header > div > div {
+  display: flex;
+  gap: 5px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+#task-form > input:last-of-type {
+  border: none;
+  background-color: darkcyan;
+  padding: 0.3em;
+  color: lavenderblush;
+  border-radius: 5px;
+}
+
+#task-form > input:last-of-type:hover {
+  opacity: 50%;
+}
+
+#sort {
+  border: none;
+  padding: 0.2em;
+  border-radius: 5px;
+  background-color: darkcyan;
+  color: lavenderblush;
+}
+
+#sort:hover {
+  opacity: 70%;
+}
+
+.text {
+  appearance: none;
+  border: none;
+  background: none;
+}

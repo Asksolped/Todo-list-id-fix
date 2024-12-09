@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="App.js" defer></script>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600&family=Outfit:wght@100..900&display=swap"
+      rel="stylesheet" />
+  </head>
+  <body>
+    <header>
+      <h1>Todo list</h1>
+      <form id="task-form">
+        <input type="text" name="task-input" id="task-input" />
+        <input type="submit" value="Add task" class="pointer" />
+      </form>
+      <div>
+        <div>
+          <input
+            type="checkbox"
+            name="show-finished"
+            id="show-finished"
+            class="pointer" />
+          <label for="show-finished" class="pointer"
+            >Hide completed tasks</label
+          >
+        </div>
+        <div>
+          <label for="sort">Sort by:</label>
+          <select name="sort" id="sort" class="pointer">
+            <option value="asc">Alphabetically Ascending</option>
+            <option value="desc">Alphabetically Descending</option>
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+          </select>
+        </div>
+      </div>
+    </header>
+    <main id="list-container"></main>
+  </body>
+</html>
