@@ -117,14 +117,13 @@ function generateList(arr) {
     mediaFinished.type = "checkbox";
     mediaFinished.checked = media.finished;
     mediaFinished.classList.add("pointer");
+    mediaFinished.classList.add("finished-box");
     if (media.finished) mediaContainer.classList.add("finished");
     //eventlistener for the checkbox for when the media is finished
     mediaFinished.addEventListener("change", () => {
       media.finished = mediaFinished.checked;
       saveAndRender();
     });
-
-    const mediaPriority = document.createElement("p");
 
     //name of entry
     const mediaName = document.createElement("input");
@@ -183,7 +182,7 @@ function generateList(arr) {
 
     //appends
     rightContainer.append(mediaTimestamp, mediaDelete, editButton);
-    leftContainer.append(mediaPriority, mediaFinished);
+    leftContainer.append(mediaFinished);
     mediaContainer.append(leftContainer, mediaName, rightContainer);
     listContainer.prepend(mediaContainer);
   });

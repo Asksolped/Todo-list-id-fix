@@ -64,7 +64,7 @@ header {
   justify-content: space-between;
 }
 
-.media-container input {
+.finished-box {
   appearance: none;
   width: 1.2em;
   height: 1.2em;
@@ -74,7 +74,7 @@ header {
   cursor: pointer;
 }
 
-.media-container input:checked {
+.finished-box:checked {
   background-color: #407076;
   border-color: darkcyan;
   display: flex;
