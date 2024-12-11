@@ -209,12 +209,12 @@ dialog button {
   }
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 910px) {
   .task-container {
-    width: 440px;
+    width: 500px;
   }
 
   header {
-    width: 440px;
+    width: 500px;
   }
 }
