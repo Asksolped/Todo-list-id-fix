@@ -52,7 +52,7 @@ header {
   width: 100%;
 }
 
-.media-container {
+.task-container {
   display: flex;
   gap: 10px;
   border: 2px rgb(225, 234, 243) solid;
@@ -191,4 +191,30 @@ dialog button {
 
 .timestamp {
   min-width: 10ch;
+}
+
+#delete {
+  background-color: red;
+}
+
+.done {
+  font-size: 1rem;
+}
+
+@media only screen and (max-width: 1440px) {
+  .task-container {
+    display: flex;
+    flex-direction: column;
+    height: 20%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .task-container {
+    width: 440px;
+  }
+
+  header {
+    width: 440px;
+  }
 }

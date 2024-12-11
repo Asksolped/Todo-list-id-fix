@@ -4,16 +4,16 @@ const listContainer = document.querySelector("#list-container");
 const showFinished = document.querySelector("#show-finished");
 const sort = document.querySelector("#sort");
 
-let mediaArr = [];
+let taskArr = [];
 let idNum = 0;
 
 // loads items from storage on page load
-const storedArr = localStorage.getItem("mediaArr");
+const storedArr = localStorage.getItem("taskArr");
 if (storedArr) {
   showFinished.checked = localStorage.getItem("showFinished") === "true";
   sort.value = localStorage.getItem("sort");
-  mediaArr = JSON.parse(storedArr);
-  idNum = parseInt(localStorage.getItem("mediaId"));
+  taskArr = JSON.parse(storedArr);
+  idNum = parseInt(localStorage.getItem("taskId"));
   saveAndRender();
 }
 
@@ -28,10 +28,8 @@ form.addEventListener("submit", (e) => {
     return;
   }
 
-  //adds one to priority to all existing media so new media is always displayed on top unless ordering specifices otherwise
-  mediaArr.forEach((media) => media.priority++);
-  //adds a new media to the array
-  mediaArr.push({
+  //adds a new task to the array
+  taskArr.push({
     name: userInput,
     //sets a timestamp for each input in isos which is required for a further down step in order to neatly display it
     timeStamp: new Date().toISOString(),
@@ -41,7 +39,7 @@ form.addEventListener("submit", (e) => {
   });
   //clears the input after you submit
   nameInput.value = "";
-  saveAndRender(mediaArr);
+  saveAndRender(taskArr);
 });
 
 function showError(message) {
@@ -68,18 +66,18 @@ sort.addEventListener("change", saveAndRender);
 function saveAndRender() {
   //saves the state of various elements if there are any items left in the array
   //if the are none all keys gets deleted
-  if (mediaArr.length > 0) {
+  if (taskArr.length > 0) {
     localStorage.setItem("showFinished", showFinished.checked);
     localStorage.setItem("sort", sort.value);
-    localStorage.setItem("mediaArr", JSON.stringify(mediaArr));
-    localStorage.setItem("mediaId", idNum);
+    localStorage.setItem("taskArr", JSON.stringify(taskArr));
+    localStorage.setItem("taskId", idNum);
   } else {
     localStorage.removeItem("showFinished");
     localStorage.removeItem("sort");
-    localStorage.removeItem("mediaArr");
-    localStorage.removeItem("mediaId");
+    localStorage.removeItem("taskArr");
+    localStorage.removeItem("taskId");
   }
-  generateList(sortAndFilter(mediaArr));
+  generateList(sortAndFilter(taskArr));
 }
 
 function sortAndFilter(arr) {
@@ -87,9 +85,9 @@ function sortAndFilter(arr) {
     .filter((e) => (showFinished.checked ? true : !e.finished))
     .sort((a, b) => {
       switch (sort.value) {
-        case "asc": // Sort by name ascending
+        case "desc": // Sort by name ascending
           return a.name.localeCompare(b.name);
-        case "desc": // Sort by name descending
+        case "asc": // Sort by name descending
           return b.name.localeCompare(a.name);
         case "oldest": // Sort by timestamp ascending
           return new Date(a.timeStamp) - new Date(b.timeStamp);
@@ -103,34 +101,39 @@ function sortAndFilter(arr) {
 function generateList(arr) {
   //removes all previous entries
   while (listContainer.firstChild) listContainer.firstChild.remove();
-  arr.forEach((media) => {
+  arr.forEach((task) => {
     //main container
-    const mediaContainer = document.createElement("div");
-    mediaContainer.classList.add("media-container");
+    const taskContainer = document.createElement("div");
+    taskContainer.classList.add("task-container");
 
     //div for styling
     const leftContainer = document.createElement("div");
     leftContainer.classList.add("container");
 
+    //creates finished task text
+    const taskDone = document.createElement("p");
+    taskDone.classList.add("done");
+    taskDone.textContent = "Task complete";
+
     //creates checkbox
-    const mediaFinished = document.createElement("input");
-    mediaFinished.type = "checkbox";
-    mediaFinished.checked = media.finished;
-    mediaFinished.classList.add("pointer");
-    mediaFinished.classList.add("finished-box");
-    if (media.finished) mediaContainer.classList.add("finished");
-    //eventlistener for the checkbox for when the media is finished
-    mediaFinished.addEventListener("change", () => {
-      media.finished = mediaFinished.checked;
+    const taskFinished = document.createElement("input");
+    taskFinished.type = "checkbox";
+    taskFinished.checked = task.finished;
+    taskFinished.classList.add("pointer");
+    taskFinished.classList.add("finished-box");
+    if (task.finished) taskContainer.classList.add("finished");
+    //eventlistener for the checkbox for when the task is finished
+    taskFinished.addEventListener("change", () => {
+      task.finished = taskFinished.checked;
       saveAndRender();
     });
 
     //name of entry
-    const mediaName = document.createElement("input");
-    mediaName.value = media.name;
-    mediaName.type = "text";
-    mediaName.readOnly = true;
-    mediaName.classList.add("text");
+    const taskName = document.createElement("input");
+    taskName.value = task.name;
+    taskName.type = "text";
+    taskName.readOnly = true;
+    taskName.classList.add("text");
 
     //edit button
     const editButton = document.createElement("button");
@@ -138,14 +141,14 @@ function generateList(arr) {
     editButton.classList.add("edit-button");
 
     editButton.addEventListener("click", () => {
-      mediaName.readOnly = !mediaName.readOnly;
-      editButton.textContent = mediaName.readOnly ? "Edit" : "Save";
+      taskName.readOnly = !taskName.readOnly;
+      editButton.textContent = taskName.readOnly ? "Edit" : "Save";
 
-      if (mediaName.readOnly) {
-        media.name = mediaName.value;
+      if (taskName.readOnly) {
+        task.name = taskName.value;
         saveAndRender();
       } else {
-        mediaName.focus();
+        taskName.focus();
       }
     });
 
@@ -154,22 +157,23 @@ function generateList(arr) {
     rightContainer.classList.add("container");
 
     //delete button
-    const mediaDelete = document.createElement("button");
-    mediaDelete.textContent = "Delete";
-    mediaDelete.classList.add("pointer");
-    mediaDelete.addEventListener("click", () => {
+    const taskDelete = document.createElement("button");
+    taskDelete.textContent = "Delete";
+    taskDelete.classList.add("pointer");
+    taskDelete.setAttribute("id", "delete");
+    taskDelete.addEventListener("click", () => {
       //removes the the entry from the original array
-      const index = mediaArr.findIndex((item) => item.id === media.id);
+      const index = taskArr.findIndex((item) => item.id === task.id);
       if (index !== -1) {
-        mediaArr.splice(index, 1);
+        taskArr.splice(index, 1);
         saveAndRender();
       }
     });
     ("");
 
     // setting time in a pretty format, reason for isos format earlier. Not using isos gave wrong output
-    const mediaTimestamp = document.createElement("p");
-    mediaTimestamp.textContent = new Date(media.timeStamp).toLocaleString(
+    const taskTimestamp = document.createElement("p");
+    taskTimestamp.textContent = new Date(task.timeStamp).toLocaleString(
       "en-GB",
       {
         day: "2-digit",
@@ -178,12 +182,12 @@ function generateList(arr) {
         minute: "2-digit",
       }
     );
-    mediaTimestamp.classList.add("timestamp");
+    taskTimestamp.classList.add("timestamp");
 
     //appends
-    rightContainer.append(mediaTimestamp, mediaDelete, editButton);
-    leftContainer.append(mediaFinished);
-    mediaContainer.append(leftContainer, mediaName, rightContainer);
-    listContainer.prepend(mediaContainer);
+    rightContainer.append(taskTimestamp, editButton, taskDelete);
+    leftContainer.append(taskFinished, taskDone);
+    taskContainer.append(leftContainer, taskName, rightContainer);
+    listContainer.prepend(taskContainer);
   });
 }
