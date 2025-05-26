@@ -13,7 +13,7 @@ if (storedArr) {
   showFinished.checked = localStorage.getItem("showFinished") === "true";
   sort.value = localStorage.getItem("sort");
   taskArr = JSON.parse(storedArr);
-  idNum = parseInt(localStorage.getItem("taskId"));
+  idNum = parseInt(localStorage.getItem("taskId")) || 0;
   saveAndRender();
 }
 
