@@ -3,6 +3,7 @@ const nameInput = document.querySelector("#task-input");
 const listContainer = document.querySelector("#list-container");
 const showFinished = document.querySelector("#show-finished");
 const sort = document.querySelector("#sort");
+const header = document.querySelector("#secondary-header");
 
 let taskArr = [];
 let idNum = 0;
@@ -190,3 +191,18 @@ function generateList(arr) {
     listContainer.prepend(taskContainer);
   });
 }
+const clearAllButton = () => {
+  const buttonElemenet = document.createElement("button");
+  buttonElemenet.classList.add("clear-all");
+  buttonElemenet.textContent = "clear all tasks";
+
+  buttonElemenet.addEventListener("click", () => {
+    taskArr = [];
+    saveAndRender();
+  });
+  return buttonElemenet;
+};
+
+const clearButton = clearAllButton();
+
+header.append(clearButton);
