@@ -169,7 +169,6 @@ function generateList(arr) {
         saveAndRender();
       }
     });
-    ("");
 
     // setting time in a pretty format, reason for isos format earlier. Not using isos gave wrong output
     const taskTimestamp = document.createElement("p");
